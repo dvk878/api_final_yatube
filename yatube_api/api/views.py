@@ -1,33 +1,17 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import filters, mixins, pagination, permissions, viewsets
-from posts.models import Post, Group, Comment, Follow
+from posts.models import Comment, Follow, Group, Post
 from .serializers import (
-    PostSerializer,
-    GroupSerializer,
     CommentSerializer,
-    FollowSerializer
+    FollowSerializer,
+    GroupSerializer,
+    PostSerializer
 )
 from .permissions import OwnershipPermission
 
 
 class PermissionViewset(viewsets.ModelViewSet):
     permission_classes = (OwnershipPermission,)
-
-
-class GroupViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-
-
-class PostViewSet(PermissionViewset):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    pagination_class = pagination.LimitOffsetPagination
-
-    def perform_create(self, serializer):
-        return serializer.save(
-            author=self.request.user
-        )
 
 
 class CommentViewSet(PermissionViewset):
@@ -66,3 +50,19 @@ class FollowViewSet(
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
+class GroupViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+class PostViewSet(PermissionViewset):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    pagination_class = pagination.LimitOffsetPagination
+
+    def perform_create(self, serializer):
+        return serializer.save(
+            author=self.request.user
+        )
