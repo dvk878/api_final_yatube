@@ -1,10 +1,11 @@
 """
-WSGI config for yatube_api project.
+Конфигурация WSGI для проекта yatube_api.
 
-It exposes the WSGI callable as a module-level variable named ``application``.
+Она предоставляет возможность вызова WSGI 
+в качестве переменной уровня модуля с именем `application`.
 
-For more information on this file, see
-https://docs.djangoproject.com/en/3.2/howto/deployment/wsgi/
+Дополнительную информацию об этом файле смотрите
+в разделе https://docs.djangoproject.com/en/3.2/howto/deployment/wsgi/
 """
 
 import os
